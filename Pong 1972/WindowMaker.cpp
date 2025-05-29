@@ -33,6 +33,15 @@ void WindowMaker::render(Player player) {
 
 }
 
+
+void WindowMaker::render(Player player,int r, int g, int b, int a) {
+
+	SDL_SetRenderDrawColor(renderer, r, g, b, a);
+	SDL_RenderFillRect(renderer, &(player.getRect()));
+
+
+}
+
 void WindowMaker::present() {
 	SDL_RenderPresent(renderer);
 
