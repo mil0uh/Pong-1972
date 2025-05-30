@@ -9,11 +9,12 @@ private:
 	// x and y velocity <Dont know if I will keep these>
 	float x_vel; 
 	float y_vel;
+	float last = 0;
 public:
 	Ball(float x_pos, float y_pos, float x_vel, float y_vel);
 	void startBall(int randomNumber);
-	int generateNumber();
-	void checkCollision(Player player1, Player player2);
+	bool checkCollision(Player player1, Player player2);
+	void ballMovement(Player player1, Player player2);
 
 
 
