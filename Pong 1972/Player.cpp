@@ -81,3 +81,21 @@ void Player::boundaryChecker() {
 
 
 }
+
+
+void Player::updatePlayer1Score() {
+	player1_score += 1;
+}
+
+void Player::updatePlayer2Score() {
+	player2_score += 1;
+}
+
+int Player::getPlayer1Score() {
+	return player1_score;
+}
+
+int Player::getPlayer2Score() {
+	return player2_score;
+}
+	

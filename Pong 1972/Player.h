@@ -4,6 +4,8 @@
 
 class Player {
 private:
+	int player1_score = 0;
+	int player2_score = 0;
 	SDL_FRect src;
 	float x_pos;
 	float y_pos;
@@ -19,4 +21,8 @@ public:
 	float getX();
 	float getY();
 	void boundaryChecker();
+	void updatePlayer1Score();
+	void updatePlayer2Score();
+	int getPlayer1Score();
+	int getPlayer2Score();
 };
