@@ -14,7 +14,10 @@ public:
 	Ball(float x_pos, float y_pos, float x_vel, float y_vel);
 	void startBall(int randomNumber);
 	bool checkCollision(Player player1, Player player2);
-	void ballMovement(Player player1, Player player2);
+	void ballMovement(Player &player1, Player &player2);
+	int originalXval();
+	int originalYval();
+
 
 
 
