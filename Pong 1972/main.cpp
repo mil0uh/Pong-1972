@@ -34,12 +34,13 @@ int main() {
 
 	Player Player1 = Player(100, 285, "Player");
 	Player Player2 = Player(1180, 285, "Other Player");
-	Ball myBall = Ball(640, 360, 30, 30);
+	Ball myBall = Ball(640, 360, 30, 0);
 
 
 
 	int randomNumber = generateNumber(); // Generating random number in the range [0,1]
 	myBall.startBall(randomNumber);
+
 	while (gameLoop) {
 		
 
