@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL3/SDL.h>
 #include <iostream>
-#include "Player.h"
+#include "Entity.h"
 
 class WindowMaker {
 private:
@@ -12,8 +12,9 @@ public:
 	WindowMaker(const char* title, int width, int height);
 	
 	void destroyWindow();
-	void render(Player player);
-	void render(Player player, int r, int g, int b, int a);
+	void renderPlayers(Entity& entity);
+	void render(Entity& entity);
+	SDL_Texture* loadTexture(const char* filePath);
 	void present();
 	void clearWindow();
 };
