@@ -1,17 +1,17 @@
 #pragma once
 #include "Player.h"
 #include <iostream>
+#include "Entity.h"
 
-
-class Ball : public Player {
+class Ball : public Entity {
 
 private:
 	// x and y velocity <Dont know if I will keep these>
-	float x_vel; 
-	float y_vel;
-	float last = 0;
+	double x_vel; 
+	double y_vel;
+	double last = 0;
 public:
-	Ball(float x_pos, float y_pos, float x_vel, float y_vel);
+	Ball(double x_pos, double y_pos, double x_vel, double y_vel, SDL_Texture* texture);
 	void startBall(int randomNumber);
 	bool checkCollision(Player player1, Player player2);
 	void ballMovement(Player &player1, Player &player2);

@@ -1,34 +1,30 @@
 #include "Ball.h"
 #include <iostream>
 #include <random>
-#include "Player.h"
 
-Ball::Ball(float x_pos, float y_pos, float x_vel, float y_vel) : Player(x_pos,y_pos,"Ball"), x_vel(x_vel), y_vel(y_vel) {
-	getRect().h = 30;
-	getRect().w = 30;
-	getRect().x = x_pos;
-	getRect().y = y_pos;
+#include "Entity.h"
 
-	
+Ball::Ball(double x_pos, double y_pos, double x_vel, double y_vel, SDL_Texture* texture) : Entity(x_pos,y_pos,texture), x_vel(x_vel), y_vel(y_vel) {
+
 }
 
 bool Ball::checkCollision(Player player1, Player player2) {
-	bool cond1 = this->getX() + this->getRect().w >= player1.getX();
-	bool cond2 = this->getX() <= player1.getX() + player1.getRect().w;
-	bool cond3 = this->getY() + this->getRect().h >= player1.getY();
-	bool cond4 = this->getY() <= player1.getY() + player1.getRect().h;
+	bool cond1 = this->getX() + this->getCurrentFrame().w >= player1.getX();
+	bool cond2 = this->getX() <= player1.getX() + player1.getCurrentFrame().w;
+	bool cond3 = this->getY() + this->getCurrentFrame().h >= player1.getY();
+	bool cond4 = this->getY() <= player1.getY() + player1.getCurrentFrame().h;
 
-	bool condA = this->getX() + this->getRect().w >= player2.getX();
-	bool condB = this->getX() <= player2.getX() + player2.getRect().w;
-	bool condC = this->getY() + this->getRect().h >= player2.getY();
-	bool condD = this->getY() <= player2.getY() + player2.getRect().h;
+	bool condA = this->getX() + this->getCurrentFrame().w >= player2.getX();
+	bool condB = this->getX() <= player2.getX() + player2.getCurrentFrame().w;
+	bool condC = this->getY() + this->getCurrentFrame().h >= player2.getY();
+	bool condD = this->getY() <= player2.getY() + player2.getCurrentFrame().h;
 
 
 	if ((cond1 && cond2 && cond3 && cond4)||(condA && condB && condC && condD)) {
 		return true;
 	}
 
-
+	return false;
 }
 
 
@@ -50,7 +46,7 @@ int Ball::originalYval() {
 }
 
 void Ball::ballMovement(Player &player1, Player &player2) {
-	std::cerr << "Player 1 Score " << player1.getPlayer1Score() << "," << " Player 2 Score " << player2.getPlayer2Score() << std::endl;
+	std::cerr << player1.getPlayer1Score() << "-" << player2.getPlayer2Score() << std::endl;
 	Uint64 now = SDL_GetTicks();
 	float deltaTime = (now - last) / 1000.0f;
 	last = now;
@@ -58,8 +54,8 @@ void Ball::ballMovement(Player &player1, Player &player2) {
 	float relativeIntersectY;
 	float normalizeRelativeIntersectionY;
 	float bounceAngle;
-	this->setX(this->getRect().x + deltaTime * speed * x_vel);
-	this->setY(this->getRect().y + deltaTime * speed * y_vel);
+	this->setX(this->getX() + deltaTime * speed * x_vel);
+	this->setY(this->getY() + deltaTime * speed * y_vel);
 
 	
 
@@ -76,12 +72,12 @@ void Ball::ballMovement(Player &player1, Player &player2) {
 		y_vel = -y_vel;
 	}
 
-	if (this->getY() > 720) {
+	if (this->getY() > 720-30) {
 		
 		y_vel = -y_vel;
 	}
 
-	if (this->getX() >= 1280) {
+	if (this->getX() > 1280) {
 		this->setX(640);
 		this->setY(360);
 		x_vel = -x_vel;
@@ -89,7 +85,7 @@ void Ball::ballMovement(Player &player1, Player &player2) {
 		player1.updatePlayer1Score();
 	}
 
-	if (this->getX() <= 0) {
+	if (this->getX() < 0) {
 		this->setX(640);
 		this->setY(360);
 		x_vel = -x_vel;
