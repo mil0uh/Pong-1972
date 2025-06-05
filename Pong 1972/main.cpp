@@ -12,7 +12,6 @@ int generateNumber() {
 	std::uniform_int_distribution<> dist(0, 1);
 
 	int left_or_right = dist(gen);
-
 	return left_or_right;
 }
 
@@ -26,20 +25,32 @@ int main() {
 
 	Uint64 currentTime = SDL_GetTicks();
 
+	SDL_Texture* player1Texture = window.loadTexture("Art/Computer.png");
+	SDL_Texture* player2Texture = window.loadTexture("Art/Player.png");
+	SDL_Texture* boardTexture = window.loadTexture("Art/Board.png");
+	SDL_Texture* ballTexture = window.loadTexture("Art/Ball.png");
+
 	// Game loop condition
 	bool gameLoop = true;
 
 	// Event Handler
 	SDL_Event event;
 
-	Player Player1 = Player(100, 285, "Player");
-	Player Player2 = Player(1180, 285, "Other Player");
-	Ball myBall = Ball(640, 360, 30, 0);
+	Player player1(100, 285, "Player 1", player1Texture);
+	Player player2(1180, 285, "Player 2", player2Texture);
+	Ball gameBall(640, 300, 2, 0, ballTexture);
+	Entity gameBackGround(0, 0, boardTexture);
+	
+	player2.setCurrentFrameHW(17, 120);
+	player1.setCurrentFrameHW(17, 120);
+	gameBall.setCurrentFrameHW(30, 30);
+	gameBackGround.setCurrentFrameHW(1280, 1080);
+	
 
 
 
 	int randomNumber = generateNumber(); // Generating random number in the range [0,1]
-	myBall.startBall(randomNumber);
+	
 
 	while (gameLoop) {
 		
@@ -53,19 +64,18 @@ int main() {
 
 		window.clearWindow();
 		// Rendering Players and Ball
-		window.render(Player1);
-		window.render(Player2);
-		window.render(myBall,255,0,0,255);
+		window.render(gameBackGround);
+		window.render(gameBall);
+		window.render(player1);
+		window.render(player2);
 
 		// Checks randomly generated number and moves the ball left or right
 		// Moving player 1 and 2 while checking if they are within the 1280x720 boundary
-		myBall.ballMovement(Player1, Player2);
-		Player1.movePlayer1();
-		Player1.boundaryChecker();
-		Player2.movePlayer2();
-		Player2.boundaryChecker();
-		 
-		
+		player1.movePlayer1();
+		player1.boundaryChecker();
+		player2.movePlayer2();
+		player2.boundaryChecker();
+		gameBall.ballMovement(player1, player2);
 
 		// Drawing the objects
 		window.present();
